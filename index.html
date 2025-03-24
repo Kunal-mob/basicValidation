@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>validation</title>
+    <script src="https://kit.fontawesome.com/9417e9d90c.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .input-group {
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 30px;
+            gap: 15px;
+        }
+
+        input {
+            padding: 5px;
+            /* border: none; */
+            outline: none;
+            width: 200px;
+        }
+
+        #submit {
+            width: 120px;
+            padding: 10px;
+
+        }
+
+        textarea {
+            padding: 10px;
+        }
+
+        span {
+            color: red;
+            /* display: none; */
+        }
+
+        i {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Form Validation</h1>
+    <form action="">
+        <div class="input-group">
+            <label for="">Full Name</label>
+            <input type="text" id="input-name" onkeyup="validateName()" placeholder="Enter Your Name">
+            <span id="name-error"></span>
+        </div>
+        <div class="input-group">
+            <label for="">Phone no.</label>
+            <input type="text" id="input-number" onkeyup="validateNumber()" placeholder="Eg. 12345 67890">
+            <span id="number-error"></span>
+
+        </div>
+        <div class="input-group">
+            <label for=""> Email Id</label>
+            <input type="text" id="input-email" onkeyup="validateEmail()" placeholder="Enter Your Email">
+            <span id="email-error"></span>
+
+        </div>
+        <div class="input-group">
+            <label for="">Your Messege</label>
+            <textarea rows="5" id="input-messege" onkeyup="validateMessege()"
+                placeholder="Type Your Messege"></textarea>
+            <span id="messege-error"></span>
+
+        </div>
+
+        <button id="submit" onclick="return validateSubmit()">Submit</button>
+        <span id="submit-error"></span>
+
+    </form>
+    <script>
+        const nameError = document.getElementById('name-error')
+        const numberError = document.getElementById('number-error')
+        const emailError = document.getElementById('email-error')
+        const messegeError = document.getElementById('messege-error')
+        const submitError = document.getElementById('submit-error')
+
+
+
+        function validateName() {
+            let name = document.getElementById("input-name").value
+            if (name.length == 0) {
+                nameError.innerHTML = "Name is required!"
+                return false
+            }
+            if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)) {
+                nameError.innerHTML = "write full name"
+                return false
+            }
+            nameError.innerHTML = `<i class="fa-regular fa-circle-check"></i>`
+            // nameError.style.color="green"
+            return true
+        }
+        function validateNumber() {
+            let number = document.getElementById("input-number").value
+            if (number.length == 0) {
+                numberError.innerHTML = "Number is required"
+                return false
+            }
+            if (number.length > 10) {
+                numberError.innerHTML = "Number shouldn't be more than 10"
+                return false
+            }
+            if (!number.match(/^[0-9]{10}$/)) {
+                numberError.innerHTML = "write full number "
+                return false
+            }
+            numberError.innerHTML = `<i class="fa-regular fa-circle-check"></i>`
+            return true
+        }
+        function validateEmail() {
+            let email = document.getElementById("input-email").value
+            if (email.length == 0) {
+                emailError.innerHTML = "email is required"
+                return false
+            }
+
+            if (!email.match(/^[A-Za-z0-9]*[@]{1}[A-Za-z]*/)) {
+                emailError.innerHTML = "write full email "
+                return false
+            }
+            emailError.innerHTML = `<i class="fa-regular fa-circle-check"></i>`
+            return true
+        }
+        function validateMessege() {
+            let messege = document.getElementById("input-messege").value
+            let len = messege.length
+
+            if (len == 0) {
+                messegeError.innerHTML = "messege is required"
+                return false
+            }
+
+            if (messege.length < 30) {
+                messegeError.innerHTML = (30 - len) + " character required "
+                return false
+            }
+            messegeError.innerHTML = `<i class="fa-regular fa-circle-check"></i>`
+            return true
+        }
+        function validateSubmit() {
+            if (!validateName() || !validateNumber() || !validateEmail() || !validateMessege()) {
+                submitError.innerHTML = "please fix error to submit"
+                setTimeout(() => {
+                    submitError.innerHTML = ""
+                }, 3000)
+                return false
+            }
+        }
+    </script>
+</body>
+
+</html>
